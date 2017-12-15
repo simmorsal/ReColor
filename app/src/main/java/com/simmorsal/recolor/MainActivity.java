@@ -14,8 +14,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//     TODO add some comments here
-
     Activity context;
     LinearLayout rootView, linReColorBackground;
     LinearLayout linRecolorStatusBar, linRecolorNavigationBar, linRecolorBoth;
@@ -24,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     TextView textView;
 
-    int imageViewColor = 0;
-    int textViewColor = 0;
+    int imageViewColorSetNumber = 0;
+    int textViewColorSetNumber = 0;
     boolean isRootViewColorChanged = false;
     boolean isCardColorChanged = false;
     boolean isStatusBarColorChanged = false;
@@ -43,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializer() {
         context = MainActivity.this;
-        rootView = (LinearLayout) findViewById(R.id.rootView);
-        linReColorBackground = (LinearLayout) findViewById(R.id.linReColorBackground);
-        theCardView = (CardView) findViewById(R.id.theCardView);
-        linRecolorStatusBar = (LinearLayout) findViewById(R.id.linRecolorStatusBar);
-        linRecolorNavigationBar = (LinearLayout) findViewById(R.id.linRecolorNavigationBar);
-        linRecolorBoth = (LinearLayout) findViewById(R.id.linRecolorBoth);
-        linPulseStatusBar = (LinearLayout) findViewById(R.id.linPulseStatusBar);
-        linPulseNavigationBar = (LinearLayout) findViewById(R.id.linPulseNavigationBar);
-        linPulseBoth = (LinearLayout) findViewById(R.id.linPulseBoth);
+        rootView = findViewById(R.id.rootView);
+        linReColorBackground = findViewById(R.id.linReColorBackground);
+        theCardView = findViewById(R.id.theCardView);
+        linRecolorStatusBar = findViewById(R.id.linRecolorStatusBar);
+        linRecolorNavigationBar = findViewById(R.id.linRecolorNavigationBar);
+        linRecolorBoth = findViewById(R.id.linRecolorBoth);
+        linPulseStatusBar = findViewById(R.id.linPulseStatusBar);
+        linPulseNavigationBar = findViewById(R.id.linPulseNavigationBar);
+        linPulseBoth = findViewById(R.id.linPulseBoth);
         imageView = findViewById(R.id.imageView);
         textView = findViewById(R.id.textView);
     }
@@ -62,52 +60,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClicks() {
+        // changing space_invaders' color
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (imageViewColor) {
+                switch (imageViewColorSetNumber) {
                     case 0:
                         new ReColor(context).setImageViewColorFilter(imageView, "ffffff", "388E3C", 300);
-                        imageViewColor = 1;
+                        imageViewColorSetNumber = 1;
                         break;
                     case 1:
                         new ReColor(context).setImageViewColorFilter(imageView, "388E3C", "00838F", 300);
-                        imageViewColor = 2;
+                        imageViewColorSetNumber = 2;
                         break;
                     case 2:
                         new ReColor(context).setImageViewColorFilter(imageView, "00838F", "F4511E", 300);
-                        imageViewColor = 3;
+                        imageViewColorSetNumber = 3;
                         break;
                     case 3:
                         new ReColor(context).setImageViewColorFilter(imageView, "F4511E", "FFFFFF", 300);
-                        imageViewColor = 0;
+                        imageViewColorSetNumber = 0;
                         break;
                 }
             }
         });
+
+        //changing the color on the text view
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (textViewColor) {
+                switch (textViewColorSetNumber) {
                     case 0:
-                        new ReColor(context).setTextColor(textView, "ffffff", "81D4FA", 300);
-                        textViewColor = 1;
+                        new ReColor(context).setTextViewColor(textView, "ffffff", "81D4FA", 300);
+                        textViewColorSetNumber = 1;
                         break;
                     case 1:
-                        new ReColor(context).setTextColor(textView, "81D4FA", "ef9a9a", 300);
-                        textViewColor = 2;
+                        new ReColor(context).setTextViewColor(textView, "81D4FA", "ef9a9a", 300);
+                        textViewColorSetNumber = 2;
                         break;
                     case 2:
-                        new ReColor(context).setTextColor(textView, "ef9a9a", "FFAB91", 300);
-                        textViewColor = 3;
+                        new ReColor(context).setTextViewColor(textView, "ef9a9a", "FFAB91", 300);
+                        textViewColorSetNumber = 3;
                         break;
                     case 3:
-                        new ReColor(context).setTextColor(textView, "FFAB91", "ffffff", 300);
-                        textViewColor = 0;
+                        new ReColor(context).setTextViewColor(textView, "FFAB91", "ffffff", 300);
+                        textViewColorSetNumber = 0;
                         break;
                 }
             }
         });
+
         // recoloring the background
         linReColorBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // changing statusBar color
         linRecolorStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // changing navigationBar color
         linRecolorNavigationBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // changing both statusBar and navigationBar colors
         linRecolorBoth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // pulsing statusBar to an orange color for 2 times
         linPulseStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // pulsing navigationBar to an orange color for 2 times
         linPulseNavigationBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // pulsing both colors' to an orange color for 5 times really fast
         linPulseBoth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
