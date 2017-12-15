@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/rootView"
+    android:background="#004D40"
+    android:gravity="center"
+    tools:context="com.simmorsal.recolor.MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:src="@drawable/space_invaders"
+        android:tint="#fff"
+        android:layout_marginBottom="0dp"
+        android:clickable="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:clickable="true"
+        android:text="a simple TextView"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linReColorBackground"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
+        android:background="#1d1d1d"
+        android:layout_width="290dp"
+        android:layout_height="70dp" >
+        <TextView
+            android:gravity="center"
+            android:text="ReColor Background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/theCardView"
+        android:clickable="true"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="30dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#1E88E5"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:layout_width="290dp"
+        android:layout_height="70dp">
+        <TextView
+            android:text="ReColor CardView"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/linRecolorStatusBar"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="ReColor status bar"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linRecolorNavigationBar"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="ReColor Navigation bar"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linRecolorBoth"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="ReColor Both"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/linPulseStatusBar"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="Pulse Status bar"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linPulseNavigationBar"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="Pulse Navigation bar"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linPulseBoth"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            android:background="#1d1d1d"
+            android:layout_width="90dp"
+            android:layout_height="70dp">
+            <TextView
+                android:text="Pulse Both"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
