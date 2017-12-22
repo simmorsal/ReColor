@@ -50,18 +50,19 @@ public class ReColor {
     private Drawable menuItemIcon;
     private ImageButton imageButton;
 
-
     private String startingColor, endingColor, lastShownColor;
     private int stepCount;
     private List<String> colorArray;
     private int stepsPassed = 0;
-    // default color changing per milliseconds
+
+    // default color transition speed in milliseconds
     private int colorChangeSpeed = 16;
 
     public ReColor(Context context) {
         this.context = (Activity) context;
 
-        // getting the screen's refresh rate and setting color based on the speed for smooth animation
+        // getting the screen's refresh rate and setting color transition based on the speed
+        // for smooth animation
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         if (windowManager != null) {
             colorChangeSpeed = (int) (1000 / windowManager.getDefaultDisplay().getRefreshRate());
@@ -468,7 +469,6 @@ public class ReColor {
                 e.printStackTrace();
             }
 
-//            Log.i(stepsPassed + "", colorArray.get(stepsPassed));
             timerHandler.postDelayed(this, colorChangeSpeed);
             if (stepsPassed == colorArray.size() - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
@@ -491,7 +491,6 @@ public class ReColor {
                 e.printStackTrace();
             }
 
-//            Log.i(stepsPassed + "", colorArray.get(stepsPassed));
             timerHandler.postDelayed(this, colorChangeSpeed);
             if (stepsPassed == colorArray.size() - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
@@ -536,7 +535,6 @@ public class ReColor {
 
             timerHandler.postDelayed(this, colorChangeSpeed);
             if (stepsPassed == colorArray.size() - 1) {
-                for (String s : colorArray) Log.i("111111111", s);
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -557,7 +555,6 @@ public class ReColor {
 
             timerHandler.postDelayed(this, colorChangeSpeed);
             if (stepsPassed == colorArray.size() - 1) {
-                for (String s : colorArray) Log.i("111111111", s);
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -597,11 +594,8 @@ public class ReColor {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     private List<String> getColorArray(String startingColor, String endingColor, int stepCount) {
         List<String> colorArray = new ArrayList<>();
-//        String[] startColorArray = startingColor.split("(?<=\\G.{2})"); // EXPLANATION BELOW // doesn't work correctly
-//        String[] endColorArray = endingColor.split("(?<=\\G.{2})");
         List<String> startColorArray = getStringParts(startingColor);
         List<String> endColorArray = getStringParts(endingColor);
-
 
         int[] startColorInIntArray = new int[4];
         int[] endColorInIntArray = new int[4];
@@ -621,50 +615,7 @@ public class ReColor {
         stepSize[1] = (endColorInIntArray[1] - startColorInIntArray[1]) / (float) stepCount;
         stepSize[2] = (endColorInIntArray[2] - startColorInIntArray[2]) / (float) stepCount;
         stepSize[3] = (endColorInIntArray[3] - startColorInIntArray[3]) / (float) stepCount;
-        Log.i("1111111", stepSize[0] + "  " + stepSize[1] + "  " + stepSize[2] + "  " + stepSize[3]);
 
-
-        //This is for when a stepSize is 0.
-//        int[] stepSizeForFix = new int[3];
-//        stepSizeForFix[0] = 1;
-//        stepSizeForFix[1] = 1;
-//        stepSizeForFix[2] = 1;
-//        float[] fixForStepSizeZero = new float[3];
-//        float[] constantFixForStepSizeZero = new float[3];
-//        boolean[] isFixPositive = new boolean[3];
-//        isFixPositive[0] = true;
-//        isFixPositive[1] = true;
-//        isFixPositive[2] = true;
-//        if (stepSize[0] == 0) {
-//            fixForStepSizeZero[0] = ((float) stepCount / (endColorInIntArray[0] - startColorInIntArray[0]));
-//            constantFixForStepSizeZero[0] = fixForStepSizeZero[0];
-//            if (fixForStepSizeZero[0] < 0) {
-//                fixForStepSizeZero[0] = fixForStepSizeZero[0] * -1;
-//                constantFixForStepSizeZero[0] = constantFixForStepSizeZero[0] * -1;
-//                isFixPositive[0] = false;
-//                stepSizeForFix[0] = -1;
-//            }
-//        }
-//        if (stepSize[1] == 0) {
-//            fixForStepSizeZero[1] = ((float) stepCount / (endColorInIntArray[1] - startColorInIntArray[1]));
-//            constantFixForStepSizeZero[1] = fixForStepSizeZero[1];
-//            if (fixForStepSizeZero[1] < 0) {
-//                fixForStepSizeZero[1] = fixForStepSizeZero[1] * -1;
-//                constantFixForStepSizeZero[1] = constantFixForStepSizeZero[1] * -1;
-//                isFixPositive[1] = false;
-//                stepSizeForFix[1] = -1;
-//            }
-//        }
-//        if (stepSize[2] == 0) {
-//            fixForStepSizeZero[2] = ((float) stepCount / (endColorInIntArray[2] - startColorInIntArray[2]));
-//            constantFixForStepSizeZero[2] = fixForStepSizeZero[2];
-//            if (fixForStepSizeZero[2] < 0) {
-//                fixForStepSizeZero[2] = fixForStepSizeZero[2] * -1;
-//                constantFixForStepSizeZero[2] = constantFixForStepSizeZero[2] * -1;
-//                isFixPositive[2] = false;
-//                stepSizeForFix[2] = -1;
-//            }
-//        }
 
         //////////////////////
         /// CREATING LIST
@@ -676,34 +627,6 @@ public class ReColor {
             int c2 = (int) (startColorInIntArray[1] + (stepSize[1] * i));
             int c3 = (int) (startColorInIntArray[2] + (stepSize[2] * i));
             int c4 = (int) (startColorInIntArray[3] + (stepSize[3] * i));
-
-
-//            Log.i("on iteration " + i, fixForStepSizeZero[0] + " " + fixForStepSizeZero[1] + " " + fixForStepSizeZero[2] + " ");
-//            if (stepSize[0] == 0) {
-//                if (i == (int) fixForStepSizeZero[0]) {
-//                    fixForStepSizeZero[0] = fixForStepSizeZero[0] + constantFixForStepSizeZero[0];
-//                    if (isFixPositive[0]) stepSizeForFix[0]++;
-//                    else stepSizeForFix[0]--;
-//                }
-//                c1 = startColorInIntArray[0] + stepSizeForFix[0];
-//            }
-//            if (stepSize[1] == 0) {
-//                if (i == (int) fixForStepSizeZero[1]) {
-//                    fixForStepSizeZero[1] = fixForStepSizeZero[1] + constantFixForStepSizeZero[1];
-//                    if (isFixPositive[1]) stepSizeForFix[1]++;
-//                    else stepSizeForFix[1]--;
-//                }
-//                c2 = startColorInIntArray[1] + stepSizeForFix[1];
-//            }
-//            if (stepSize[2] == 0) {
-//                if (i == (int) fixForStepSizeZero[2]) {
-//                    fixForStepSizeZero[2] = fixForStepSizeZero[2] + constantFixForStepSizeZero[2];
-//                    if (isFixPositive[2]) stepSizeForFix[2]++;
-//                    else stepSizeForFix[2]--;
-//                }
-//                c3 = startColorInIntArray[2] + stepSizeForFix[2];
-//            }
-
 
             // checking for integers out of bound
             if (c1 > 255) c1 = 255;
