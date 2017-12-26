@@ -55,18 +55,27 @@ new ReColor(context).setViewBackgroundColor(view, "#FFFFFF", "AA000000", 400);
 * `setCardViewColor()`: changes `CardView` color:
 
 ```java
+new ReColor(context).setCardViewColor(cardView, startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setCardViewColor(cardView, "FFFFFF", "000000", 300);
 ```
 
 * `setTextViewColor()`: changes `TextView` color:
 
 ```java
+new ReColor(context).setTextViewColor(textView, startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setTextViewColor(textView, "FFFFFF", "000000", 300);
 ```
 
 * `setImageButtonColorFilter()`: changes `ImageButton`'s color filter:
 
 ```java
+new ReColor(context).setImageButtonColorFilter(imageButton, startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setImageButtonColorFilter(imageButton, "FFFFFF", "000000", 300);
 ```
 
@@ -74,6 +83,9 @@ new ReColor(context).setImageButtonColorFilter(imageButton, "FFFFFF", "000000", 
 * `setImageViewColorFilter()`: changes `ImageView`'s color filter:
 
 ```java
+new ReColor(context).setImageViewColorFilter(imageView, startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setImageViewColorFilter(imageView, "FFFFFF", "000000", 300);
 ```
 
@@ -81,6 +93,9 @@ new ReColor(context).setImageViewColorFilter(imageView, "FFFFFF", "000000", 300)
 `startingColor` so it would be automatically retrieved from status bar itself:
 
 ```java
+new ReColor(context).setStatusBarColor(startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setStatusBarColor(null, "000000", 300);
 
 // or:
@@ -92,6 +107,9 @@ new ReColor(context).setStatusBarColor("FFFFFF", "000000", 300);
 you can pass `null` as `startingColor` so it would be retrieved automatically:
 
 ```java
+new ReColor(context).setNavigationBarColor(startingColor, endingColor, duration);
+
+// usage:
 new ReColor(context).setNavigationBarColor(null, "000000", 300);
 
 // or
@@ -123,6 +141,9 @@ and also returns the last color set
 by that particular ReColor object, in any of the above methods:
 
 ```java
+reColor.Stop();
+
+// usage:
 // For example consider a LinearLayout's background being reColored
 ReColor reColor = new ReColor(context)
     .setViewBackgroundColor(linearLayout, "FFFFFF", "000000", 2000);
@@ -161,6 +182,17 @@ reColor.setOnReColorFinish(new OnReColorFinish() {
                                         Log.i(TAG, "reColoring finished");
                                     }
                                 });
+                                
+// or
+
+new ReColor(context)
+    .setViewBackgroundColor(view, "FFFFFF", "000000", 1000)
+    .setOnReColorFinish(new OnReColorFinish() {
+                                    @Override
+                                    public void onFinish() {
+                                        Log.i(TAG, "reColoring finished");
+                                    }
+                                });
 ```
 
 #
@@ -175,7 +207,7 @@ reColor.setOnReColorFinish(new OnReColorFinish() {
 
 this method is experimental because while it's reColoring
  a `MenuIcon`, the menu becomes unresponsive to touch. So the best way to use it
- is to give it a duration of 100 or less. and if you're simulating pulsing, wait
+ is to give it a duration of 200 or less. and if you're simulating pulsing, wait
  a bit before the next pulse begins. this is my implementation of pulsing:
 
 ```java
