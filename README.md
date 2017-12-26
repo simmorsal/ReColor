@@ -209,7 +209,7 @@ Handler handler = new Handler().post(new Runnable() {
 
 
 
-### Important notes
+## Important notes
 
 * **ONLY** reColor one widget per object of ReColor class.
 In other words, **DO NOT** create one object of ReColor class and use it to
@@ -219,7 +219,7 @@ reColor multiple widgets - at least at the same time.
 `"RRGGBB"` - `"AARRGGBB"` - `"#RRGGBB"` - `"#AARRGGBB"`
 
 
-### Thanks
+## Thanks
 Special thanks to
 [Alireza Rajei](https://www.linkedin.com/comm/in/alireza-rajei-414b99142?midToken=AQGDUmCR2BblHg&trk=eml-email_pymk_01-header-108-profile&trkEmail=eml-email_pymk_01-header-108-profile-null-9mn0gg~jbfnzkei~g3-null-neptune%2Fprofile~vanity%2Eview&lipi=urn%3Ali%3Apage%3Aemail_email_pymk_01%3BnXVdn9X8QZyr210NjJLivg%3D%3D)
 who thought me all about android and put me in the right direction.
