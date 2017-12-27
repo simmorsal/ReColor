@@ -146,7 +146,7 @@ ReColor reColor = new ReColor(context);
 reColor.Stop();
 
 // usage:
-// For example consider a LinearLayout's background being reColored
+// Consider a LinearLayout's background being reColored
 ReColor reColor = new ReColor(context)
     .setViewBackgroundColor(linearLayout, "FFFFFF", "000000", 2000);
 
