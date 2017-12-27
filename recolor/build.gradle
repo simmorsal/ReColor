@@ -1,15 +1,42 @@
 apply plugin: 'com.android.library'
 
+
+final VERSION_NAME = "1.0.1"
+final VERSION_CODE = 2
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'recolor'
+
+    publishedGroupId = 'com.simmorsal.recolor'
+    libraryName = 'ReColor'
+    artifact = 'recolor'
+
+    libraryDescription = 'An Android library that tries to do cool things with colors'
+
+    siteUrl = 'https://github.com/SIMMORSAL/ReColor'
+    gitUrl = 'https://github.com/SIMMORSAL/ReColor'
+
+    libraryVersion = VERSION_NAME
+
+    developerId = 'simmorsal'
+    developerName = 'SIMMORSAL'
+    developerEmail = 'simmorsal@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
 android {
     compileSdkVersion 26
-
-
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,7 +56,12 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    androidTestCompile 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.android.support:cardview-v7:26.1.0'
 }
+
+// Place it at the end of the file
+apply from: 'https://raw.githubusercontent.com/SIMMORSAL/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/SIMMORSAL/JCenter/master/bintrayv1.gradle'

@@ -1,4 +1,4 @@
-package com.simmorsal.recolor;
+package com.simmorsal.recolor_project;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,13 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>
  * A library that tries to do cool things with colors.
  *
  * @see ReColor#getColorList
  * @see ReColor#setMenuIconColor
  * @see ReColor#setTextViewColor
- * @see ReColor#setImagbeButtonColorFilter
+ * @see ReColor#setImageButtonColorFilter
  * @see ReColor#setImageViewColorFilter
  * @see ReColor#setViewBackgroundColor
  * @see ReColor#setCardViewColor
@@ -79,8 +77,6 @@ public class ReColor {
      * This method returns an ArrayList of colors between two colors.
      * The logic behind this is for the colors to be set one after the other every 10ms to
      * visualize a smooth color transition.
-     *
-     * @return List < String >
      */
     public List<String> getColorList(String startingColor, String endingColor, int listLength) {
 
@@ -112,6 +108,8 @@ public class ReColor {
             if (this.startingColor != null && this.endingColor != null) {
                 this.menuItem = menuItem;
                 menuItemIcon = menuItem.getIcon();
+                if (menuItemIcon == null)
+                    throw new ReColorException("\n \n      menuItem doesn't have an icon \n ");
                 stepCount = duration / colorChangeSpeed;
                 colorArray = getColorArray(this.startingColor, this.endingColor, stepCount);
                 timerHandler.postDelayed(menuIconColorTimerRunnable, 0);
@@ -126,7 +124,7 @@ public class ReColor {
     /**
      * this changes the color filter on an ImageButton
      */
-    public ReColor setImagbeButtonColorFilter(ImageButton imageButton, String startingColor, String endingColor, int duration) {
+    public ReColor setImageButtonColorFilter(ImageButton imageButton, String startingColor, String endingColor, int duration) {
 
 
         try {

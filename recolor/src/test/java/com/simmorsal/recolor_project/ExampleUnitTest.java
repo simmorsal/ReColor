@@ -1,4 +1,4 @@
-package com.simmorsal.recolor;
+package com.simmorsal.recolor_project;
 
 import org.junit.Test;
 

@@ -8,7 +8,7 @@
     android:id="@+id/rootView"
     android:background="#004D40"
     android:gravity="center"
-    tools:context="com.simmorsal.recolor.MainActivity">
+    tools:context="com.simmorsal.recolor_project.MainActivity">
 
 
     <ImageView

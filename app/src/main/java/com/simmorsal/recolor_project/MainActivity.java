@@ -1,4 +1,4 @@
-package com.simmorsal.recolor;
+package com.simmorsal.recolor_project;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
