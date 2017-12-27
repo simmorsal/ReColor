@@ -2,14 +2,15 @@
 
 An Android library that tries to do cool stuff with colors.
 
- ---- image here ----
+![gif_part1](https://user-images.githubusercontent.com/24822099/34370937-e381c3d4-eadd-11e7-8d1f-12af76a90500.gif)
+![gif_part2](https://user-images.githubusercontent.com/24822099/34370991-556ae99e-eade-11e7-9eb1-7ae7772271c6.gif)
 
 # Usage
 
 Add this to your gradle file:
 
 ```gradle
-    implementation 'com.simmorsal.recolor:recolor:1.0.0'
+    implementation 'com.simmorsal.recolor:recolor:1.0.1'
 ```
 
 
@@ -141,6 +142,7 @@ and also returns the last color set
 by that particular ReColor object, in any of the above methods:
 
 ```java
+ReColor reColor = new ReColor(context);
 reColor.Stop();
 
 // usage:
