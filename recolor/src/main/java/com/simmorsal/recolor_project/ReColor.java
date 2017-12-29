@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * A library that tries to do cool things with colors.
  *
- * @see ReColor#getColorList
+ * @see ReColor#getColorHEXList
  * @see ReColor#setMenuIconColor
  * @see ReColor#setTextViewColor
  * @see ReColor#setImageButtonColorFilter
@@ -76,11 +75,33 @@ public class ReColor {
 
 
     /**
-     * This method returns an ArrayList of colors between two colors.
-     * The logic behind this is for the colors to be set one after the other every 10ms to
-     * visualize a smooth color transition.
+     * This method returns an ArrayList of HEX color values between two colors.
      */
-    public int[] getColorList(String startingColor, String endingColor, int listLength) {
+    public List<String> getColorHEXList(String startingColor, String endingColor, int listLength) {
+
+        List<String> hexList = new ArrayList<>();
+
+        try {
+            if (listLength < 3)
+                throw new ReColorException("\n \n      length must at least be 3 \n ");
+            this.startingColor = getValidColor(startingColor, "start");
+            this.endingColor = getValidColor(endingColor, "end");
+            if (this.startingColor != null && this.endingColor != null) {
+                colorArray = getColorArray(this.startingColor, this.endingColor, listLength - 1);
+                for (int i : colorArray)
+                    hexList.add(String.format("#%06X", (0xFFFFFF & i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return hexList;
+    }
+
+    /**
+     * This method returns an int[] of color values between two colors.
+     */
+    public int[] getColorIntArray(String startingColor, String endingColor, int listLength) {
 
         try {
             if (listLength < 3)

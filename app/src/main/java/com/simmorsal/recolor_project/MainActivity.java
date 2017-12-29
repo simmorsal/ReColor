@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     Activity context;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logAListOfColors() {
-        int[] colorList = new ReColor(context).getColorList("E91E63", "1E88E5", 20);
+        int[] colorList = new ReColor(context).getColorIntArray("E91E63", "1E88E5", 20);
         for (int i = 0; i < colorList.length; i++) Log.i("Color #" + i, colorList[i]+"");
     }
 

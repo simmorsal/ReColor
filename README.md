@@ -10,7 +10,7 @@ An Android library that tries to do cool stuff with colors.
 Add this to your gradle file:
 
 ```gradle
-    implementation 'com.simmorsal.recolor:recolor:1.0.1'
+    implementation 'com.simmorsal.recolor:recolor:1.1.0'
 ```
 
 
@@ -28,7 +28,8 @@ Add this to your gradle file:
 > * pulseStatusBar()
 > * pulseNavigationBar()
 > * stop()
-> * getColorList()
+> * getColorIntArray()
+> * getColorHEXList()
 > * setOnReColorFinish()
 >
 > experimental:
@@ -160,15 +161,26 @@ ReColor reColor = new ReColor(context)
 }
 ```
 
-* `getColorList()`: returns a `List<String>` of colors between `startingColor`
+* `getColorHEXList()`: returns a `List<String>` of HEX color values between `startingColor`
  and `endingColor` with a List length of `listLength`, so you can use it in your code:
 
 ```java
-new ReColor(context).getColorList(startingColor, endingColor, listLength);
+new ReColor(context).getColorHEXList(startingColor, endingColor, listLength);
 
 // usage:
 List<String> colorList = new ReColor(context)
-    .getColorList("FFFFFF", "000000", 100);
+    .getColorHEXList("FFFFFF", "000000", 100);
+```
+
+* `getColorIntArray()`: returns an `int[]` of color-int values between `startingColor`
+ and `endingColor` with a List length of `listLength`, so you can use it in your code:
+
+```java
+new ReColor(context).getColorIntArray(startingColor, endingColor, listLength);
+
+// usage:
+int[] colorList = new ReColor(context)
+    .getColorIntArray("FFFFFF", "000000", 100);
 ```
 
 
