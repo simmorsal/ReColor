@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,9 +49,10 @@ public class ReColor {
     private Drawable menuItemIcon;
     private ImageButton imageButton;
 
-    private String startingColor, endingColor, lastShownColor;
+    private String startingColor, endingColor;
+    private int lastShownColor;
     private int stepCount;
-    private List<String> colorArray;
+    private int[] colorArray;
     private int stepsPassed = 0;
 
     // default color transition speed in milliseconds
@@ -78,7 +80,7 @@ public class ReColor {
      * The logic behind this is for the colors to be set one after the other every 10ms to
      * visualize a smooth color transition.
      */
-    public List<String> getColorList(String startingColor, String endingColor, int listLength) {
+    public int[] getColorList(String startingColor, String endingColor, int listLength) {
 
         try {
             if (listLength < 3)
@@ -208,19 +210,34 @@ public class ReColor {
                 this.endingColor = getValidColor(pulseColor, "end");
                 if (this.startingColor != null && this.endingColor != null) {
                     stepCount = pulseSpeed / colorChangeSpeed;
-                    colorArray = getColorArray(this.startingColor, this.endingColor, stepCount);
+                    
+                    int startingArrayLength = stepCount + 1;
+                    int recurringPulsesLength = ((stepCount + 1) * 2) * pulseCount;
+                    int dyingDownLength = (stepCount * 2) + 1;
+                    int colorCount = startingArrayLength + recurringPulsesLength + dyingDownLength;
+                    colorArray = new int[colorCount];
+                    
+                    // starting array
+                    int[] colors = getColorArray(this.startingColor, this.endingColor, stepCount);
+                    System.arraycopy(colors, 0, colorArray, 0, colors.length);
 
-                    String middleOfColorArray = getValidColor(colorArray.get((int) (colorArray.size() / 2)), "end");
-                    List<String> colors;
+                    String middleOfColorArray = getValidColor(String.format("#%06X", colors[colors.length / 2]), "end");
+                    
+                    // recurring pulses
+                    int destPos;
                     for (int i = 0; i < pulseCount; i++) {
                         colors = getColorArray(this.endingColor, middleOfColorArray, stepCount);
-                        for (String s : colors) colorArray.add(s);
+                        destPos = startingArrayLength + (((stepCount + 1) * 2) * i);
+                        System.arraycopy(colors, 0, colorArray, destPos, colors.length);
                         colors = getColorArray(middleOfColorArray, this.endingColor, stepCount);
-                        for (String s : colors) colorArray.add(s);
+                        destPos = startingArrayLength + (((stepCount + 1) * 2) * i) + (stepCount + 1);
+                        System.arraycopy(colors, 0, colorArray, destPos, colors.length);
                     }
 
-                    colors = getColorArray(this.endingColor, this.startingColor, (int) (stepCount * 2));
-                    for (String s : colors) colorArray.add(s);
+                    // dying down
+                    colors = getColorArray(this.endingColor, this.startingColor, stepCount * 2);
+                    destPos = startingArrayLength + recurringPulsesLength;
+                    System.arraycopy(colors, 0, colorArray, destPos, colors.length);
 
                     stepsPassed = 0;
                     timerHandler.removeCallbacksAndMessages(null);
@@ -248,20 +265,35 @@ public class ReColor {
                 this.endingColor = getValidColor(pulseColor, "end");
                 if (this.startingColor != null && this.endingColor != null) {
                     stepCount = pulseSpeed / colorChangeSpeed;
-                    colorArray = getColorArray(this.startingColor, this.endingColor, stepCount);
 
-                    String middleOfColorArray = getValidColor(colorArray.get((int) (colorArray.size() / 2)), "end");
-                    List<String> colors;
+                    int startingArrayLength = stepCount + 1;
+                    int recurringPulsesLength = ((stepCount + 1) * 2) * pulseCount;
+                    int dyingDownLength = (stepCount * 2) + 1;
+                    int colorCount = startingArrayLength + recurringPulsesLength + dyingDownLength;
+                    colorArray = new int[colorCount];
+
+                    // starting array
+                    int[] colors = getColorArray(this.startingColor, this.endingColor, stepCount);
+                    System.arraycopy(colors, 0, colorArray, 0, colors.length);
+
+                    String middleOfColorArray = getValidColor(String.format("#%06X", colors[colors.length / 2]), "end");
+
+                    // recurring pulses
+                    int destPos;
                     for (int i = 0; i < pulseCount; i++) {
                         colors = getColorArray(this.endingColor, middleOfColorArray, stepCount);
-                        for (String s : colors) colorArray.add(s);
+                        destPos = startingArrayLength + (((stepCount + 1) * 2) * i);
+                        System.arraycopy(colors, 0, colorArray, destPos, colors.length);
                         colors = getColorArray(middleOfColorArray, this.endingColor, stepCount);
-                        for (String s : colors) colorArray.add(s);
+                        destPos = startingArrayLength + (((stepCount + 1) * 2) * i) + (stepCount + 1);
+                        System.arraycopy(colors, 0, colorArray, destPos, colors.length);
                     }
 
-                    colors = getColorArray(this.endingColor, this.startingColor, (int) (stepCount * 2));
-                    for (String s : colors) colorArray.add(s);
-
+                    // dying down
+                    colors = getColorArray(this.endingColor, this.startingColor, stepCount * 2);
+                    destPos = startingArrayLength + recurringPulsesLength;
+                    System.arraycopy(colors, 0, colorArray, destPos, colors.length);
+                    
                     stepsPassed = 0;
                     timerHandler.removeCallbacksAndMessages(null);
                     timerHandler.postDelayed(statusBarColorTimerRunnable, 0);
@@ -395,7 +427,8 @@ public class ReColor {
      */
     public String stop() {
         timerHandler.removeCallbacksAndMessages(null);
-        return lastShownColor;
+        
+        return String.format("#%06X", lastShownColor);
     }
 
     /**
@@ -418,15 +451,15 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                menuItemIcon.setColorFilter(Color.parseColor(lastShownColor), PorterDuff.Mode.SRC_IN);
+                lastShownColor = colorArray[stepsPassed];
+                menuItemIcon.setColorFilter(lastShownColor, PorterDuff.Mode.SRC_IN);
                 menuItem.setIcon(menuItemIcon);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, 10);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -439,14 +472,14 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                imageButton.setColorFilter(Color.parseColor(lastShownColor));
+                lastShownColor = colorArray[stepsPassed];
+                imageButton.setColorFilter(lastShownColor);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, 10);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -459,16 +492,16 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
+                lastShownColor = colorArray[stepsPassed];
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    context.getWindow().setNavigationBarColor(Color.parseColor(lastShownColor));
+                    context.getWindow().setNavigationBarColor(lastShownColor);
                 } else timerHandler.removeCallbacksAndMessages(null);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -481,16 +514,16 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
+                lastShownColor = colorArray[stepsPassed];
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    context.getWindow().setStatusBarColor(Color.parseColor(lastShownColor));
+                    context.getWindow().setStatusBarColor(lastShownColor);
                 } else timerHandler.removeCallbacksAndMessages(null);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -504,14 +537,14 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                viewBackground.setBackgroundColor(Color.parseColor(lastShownColor));
+                lastShownColor = colorArray[stepsPassed];
+                viewBackground.setBackgroundColor(lastShownColor);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -525,14 +558,14 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                imageView.setColorFilter(Color.parseColor(lastShownColor));
+                lastShownColor = colorArray[stepsPassed];
+                imageView.setColorFilter(lastShownColor);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -545,14 +578,14 @@ public class ReColor {
 
             stepsPassed++;
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                textView.setTextColor(Color.parseColor(lastShownColor));
+                lastShownColor = colorArray[stepsPassed];
+                textView.setTextColor(lastShownColor);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -567,16 +600,16 @@ public class ReColor {
             stepsPassed++;
 
             try {
-                lastShownColor = colorArray.get(stepsPassed);
-                cardViewBackground.setCardBackgroundColor(Color.parseColor(lastShownColor));
+                lastShownColor = colorArray[stepsPassed];
+                cardViewBackground.setCardBackgroundColor(lastShownColor);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
-//            Log.i(stepsPassed + "", colorArray.get(stepsPassed));
+//            Log.i(stepsPassed + "", colorArray[stepsPassed]);
 
             timerHandler.postDelayed(this, colorChangeSpeed);
-            if (stepsPassed == colorArray.size() - 1) {
+            if (stepsPassed == colorArray.length - 1) {
                 if (mOnReColorFinish != null) mOnReColorFinish.onFinish();
                 timerHandler.removeCallbacksAndMessages(null);
             }
@@ -590,8 +623,8 @@ public class ReColor {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private List<String> getColorArray(String startingColor, String endingColor, int stepCount) {
-        List<String> colorArray = new ArrayList<>();
+    private int[] getColorArray(String startingColor, String endingColor, int stepCount) {
+        int[] colorArray;
         List<String> startColorArray = getStringParts(startingColor);
         List<String> endColorArray = getStringParts(endingColor);
 
@@ -617,7 +650,9 @@ public class ReColor {
 
         //////////////////////
         /// CREATING LIST
-        colorArray.add("#" + startingColor);
+        colorArray = new int[stepCount + 1];
+        
+        colorArray[0] = Color.parseColor("#" + startingColor);
 
         for (int i = 1; i < stepCount; i++) {
 
@@ -636,22 +671,10 @@ public class ReColor {
             if (c4 > 255) c4 = 255;
             else if (c4 < 0) c4 = 0;
 
-            // turning into hex
-            String color1 = Integer.toHexString(c1);
-            String color2 = Integer.toHexString(c2);
-            String color3 = Integer.toHexString(c3);
-            String color4 = Integer.toHexString(c4);
-
-            // turning possible one character to two
-            if (color1.length() == 1) color1 = "0" + color1;
-            if (color2.length() == 1) color2 = "0" + color2;
-            if (color3.length() == 1) color3 = "0" + color3;
-            if (color4.length() == 1) color4 = "0" + color4;
-
-            colorArray.add("#" + color1 + color2 + color3 + color4);
+            colorArray[i] = Color.argb(c1, c2, c3, c4);
         }
 
-        colorArray.add("#" + endingColor);
+        colorArray[colorArray.length-1] = Color.parseColor("#" + endingColor);
 
         return colorArray;
     }

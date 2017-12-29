@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logAListOfColors() {
-        List<String> colorList = new ReColor(context).getColorList("E91E63", "1E88E5", 20);
-        for (int i = 0; i < colorList.size(); i++) Log.i("Color #" + i, colorList.get(i));
+        int[] colorList = new ReColor(context).getColorList("E91E63", "1E88E5", 20);
+        for (int i = 0; i < colorList.length; i++) Log.i("Color #" + i, colorList[i]+"");
     }
 
     private void onClicks() {
