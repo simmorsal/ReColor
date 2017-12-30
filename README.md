@@ -40,7 +40,7 @@ Add this to your gradle file:
 
 #### Explanations:
 
-* `setViewBackgroundColor()`:
+* ##### `setViewBackgroundColor()`:
 changes the background color of any `View` you give it:
 
 ```java
@@ -54,7 +54,8 @@ reColor.setViewBackgroundColor(view, "FFFFFF", "#AA000000", 400);
 new ReColor(context).setViewBackgroundColor(view, "#FFFFFF", "AA000000", 400);
 ```
 
-* `setCardViewColor()`: changes `CardView` color:
+* ##### `setCardViewColor()`: 
+changes `CardView` color:
 
 ```java
 new ReColor(context).setCardViewColor(cardView, startingColor, endingColor, duration);
@@ -63,7 +64,8 @@ new ReColor(context).setCardViewColor(cardView, startingColor, endingColor, dura
 new ReColor(context).setCardViewColor(cardView, "FFFFFF", "000000", 300);
 ```
 
-* `setTextViewColor()`: changes `TextView` color:
+* ##### `setTextViewColor()`: 
+changes `TextView` color:
 
 ```java
 new ReColor(context).setTextViewColor(textView, startingColor, endingColor, duration);
@@ -72,7 +74,8 @@ new ReColor(context).setTextViewColor(textView, startingColor, endingColor, dura
 new ReColor(context).setTextViewColor(textView, "FFFFFF", "000000", 300);
 ```
 
-* `setImageButtonColorFilter()`: changes `ImageButton`'s color filter:
+* ##### `setImageButtonColorFilter()`: 
+changes `ImageButton`'s color filter:
 
 ```java
 new ReColor(context).setImageButtonColorFilter(imageButton, startingColor, endingColor, duration);
@@ -82,7 +85,8 @@ new ReColor(context).setImageButtonColorFilter(imageButton, "FFFFFF", "000000", 
 ```
 
 
-* `setImageViewColorFilter()`: changes `ImageView`'s color filter:
+* ##### `setImageViewColorFilter()`: 
+changes `ImageView`'s color filter:
 
 ```java
 new ReColor(context).setImageViewColorFilter(imageView, startingColor, endingColor, duration);
@@ -91,7 +95,8 @@ new ReColor(context).setImageViewColorFilter(imageView, startingColor, endingCol
 new ReColor(context).setImageViewColorFilter(imageView, "FFFFFF", "000000", 300);
 ```
 
-* `setStatusBarColor()`: changes `Status Bar` color. you can pass `null` as
+* ##### `setStatusBarColor()`: 
+changes `Status Bar` color. you can pass `null` as
 `startingColor` so it would be automatically retrieved from status bar itself:
 
 ```java
@@ -105,7 +110,8 @@ new ReColor(context).setStatusBarColor(null, "000000", 300);
 new ReColor(context).setStatusBarColor("FFFFFF", "000000", 300);
 ```
 
-* `setNavigationBarColor()`: changes `Navigation Bar` color. like the status bar,
+* ##### `setNavigationBarColor()`: 
+changes `Navigation Bar` color. like the status bar,
 you can pass `null` as `startingColor` so it would be retrieved automatically:
 
 ```java
@@ -119,7 +125,8 @@ new ReColor(context).setNavigationBarColor(null, "000000", 300);
 new ReColor(context).setNavigationBarColor("FFFFFF", "000000", 300);
 ```
 
-* `pulseStatusBar()`: this method pulses the status bar color to the `pulseColor`,
+* ##### `pulseStatusBar()`: 
+this method pulses the status bar color to the `pulseColor`,
 `pulseCount` times, each pulse taking `pulseSpeed` milliseconds:
 
 ```java
@@ -129,7 +136,8 @@ new ReColor(context).pulseStatusBar(pulseColor, pulseSpeed, pulseCount);
 new ReColor(context).pulseStatusBar("FFFFFF", 100, 4);
 ```
 
-* `pulseNavigationBar()`: just like `pulseStatusBar()`, but on Navigation Bar:
+* ##### `pulseNavigationBar()`: 
+just like `pulseStatusBar()`, but on Navigation Bar:
 
 ```java
 new ReColor(context).pulseNavigationBar(pulseColor, pulseSpeed, palseCount);
@@ -138,7 +146,8 @@ new ReColor(context).pulseNavigationBar(pulseColor, pulseSpeed, palseCount);
 new ReColor(context).pulseNavigationBar("FFFFFF", 150, 5);
 ```
 
-* `stop()`: this method stops a reColoring on any of the above methods,
+* ##### `stop()`: 
+this method stops a reColoring on any of the above methods,
 and also returns the last color set
 by that particular ReColor object, in any of the above methods:
 
@@ -161,7 +170,8 @@ ReColor reColor = new ReColor(context)
 }
 ```
 
-* `getColorHEXList()`: returns a `List<String>` of HEX color values between `startingColor`
+* ##### `getColorHEXList()`: 
+returns a `List<String>` of HEX color values between `startingColor`
  and `endingColor` with a List length of `listLength`, so you can use it in your code:
 
 ```java
@@ -172,7 +182,8 @@ List<String> colorList = new ReColor(context)
     .getColorHEXList("FFFFFF", "000000", 100);
 ```
 
-* `getColorIntArray()`: returns an `int[]` of color-int values between `startingColor`
+* ##### `getColorIntArray()`: 
+returns an `int[]` of color-int values between `startingColor`
  and `endingColor` with a List length of `listLength`, so you can use it in your code:
 
 ```java
@@ -184,7 +195,8 @@ int[] colorList = new ReColor(context)
 ```
 
 
- * `setOnReColorFinish()`: you can implement this on a ReColor object
+ * ##### `setOnReColorFinish()`: 
+ you can implement this on a ReColor object
  to get notified when reColoring finishes:
 
 ```java
@@ -213,7 +225,8 @@ new ReColor(context)
 
 #### Experimental methods:
 
-* `setMenuIconColor()`: changes `MenuIcon` of a `MenuItem` color:
+* ##### `setMenuIconColor()`: 
+changes `MenuIcon` of a `MenuItem` color:
 
 ```java
     new ReColor(context).setMenuIconColor(menuItem, startingColor, endingColor, duration);
